@@ -1,4 +1,4 @@
-# 🛍️ My Product List App
+# My Invoice App
 
 A mobile application built with **Expo**, **React Native**, and **TypeScript**, implementing a **Clean Architecture** pattern for a scalable and maintainable codebase. It features a Invoice listing.
 
