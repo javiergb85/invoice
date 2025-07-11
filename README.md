@@ -1,50 +1,62 @@
-# Welcome to your Expo app 👋
+# 🛍️ My Product List App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile application built with **Expo**, **React Native**, and **TypeScript**, implementing a **Clean Architecture** pattern for a scalable and maintainable codebase. It features a Invoice listing.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+* **Clean Architecture:** Structured in layers (Domain, Data, Presentation) for separation of concerns.
+* **Zustand for State Management:** Lightweight and powerful state management.
+* **Expo Router:** File-system based navigation for intuitive routing.
+* **TypeScript:** Type safety for robust and error-free code.
 
-   ```bash
-   npm install
-   ```
+## 🚀 Technologies Used
 
-2. Start the app
+* **Expo SDK:** The framework for building universal React Native apps.
+* **React Native:** For building native mobile UIs.
+* **TypeScript:** Superset of JavaScript for type safety.
+* **Zustand:** A small, fast, and scalable bearbones state-management solution.
+* **Expo Router:** File-system based routing for React Native and web.
 
-   ```bash
-   npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## 📁 Project Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The project follows a **Clean Architecture** pattern:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## 🛠️ Installation
 
-When you're ready, run:
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/javiergb85/invoice.git](https://github.com/javiergb85/invoice.git)
+    cd invoice
+    ```
 
-```bash
-npm run reset-project
-```
+2.  **Install dependencies:**
+    If you use `npm`:
+    ```bash
+    npm install
+    ```
+    If you use `yarn`:
+    ```bash
+    yarn install
+    ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## ▶️ Running the Application
 
-## Learn more
+1.  **Start the Expo development server:**
+    ```bash
+    npm start
+    # or
+    yarn start
+    ```
 
-To learn more about developing your project with Expo, look at the following resources:
+2.  **Open on your device/emulator:**
+    * **Expo Go App:** Download the Expo Go app on your iOS or Android device. Scan the QR code displayed in your terminal or browser (Expo Developer Tools).
+    * **Android Emulator:** Press `a` in the terminal.
+    * **iOS Simulator (macOS only):** Press `i` in the terminal.
+    * **Web Browser:** Press `w` in the terminal.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+## 📄 License
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the MIT License - see the `LICENSE` file for details.

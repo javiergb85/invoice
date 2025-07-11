@@ -1,134 +1,54 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, Button, FlatList, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
- 
+import { InvoiceEntity } from '../../domain/entities/invoice_entity';
+import { useInvoiceStore } from '../stores/invoice_store';
 
-// ---------------------------------------------
-// VALORES DE PRUEBA Y DATOS MOCK
-// ---------------------------------------------
 
-export type InvoiceStatus = 'CREATED' | 'PENDING' | 'COMPLETED' | 'EXPIRED';
-export type CryptoType = 'USDT-TRX' | 'USDT-ETH' | 'ETH' | 'TRX';
-
-export interface InvoiceEntity {
-  id: string;
-  amount: number;
-  status: InvoiceStatus;
-  cryptoType: CryptoType;
-  createdAt: string;
-  expiresAt: string;
-}
-
-export interface InvoiceFilter {
-  statuses: InvoiceStatus[];
-  cryptoTypes: CryptoType[];
-}
-
-const STATUSES: InvoiceStatus[] = ['CREATED', 'PENDING', 'COMPLETED', 'EXPIRED'];
-const CRYPTO_TYPES: CryptoType[] = ['USDT-TRX', 'USDT-ETH', 'ETH', 'TRX'];
 const POLLING_INTERVAL = 5000;
 
-const createMockInvoices = (count: number, startId: number): InvoiceEntity[] => {
-  const mockInvoices: InvoiceEntity[] = [];
-  for (let i = 0; i < count; i++) {
-    const id = startId + i;
-    const status = STATUSES[Math.floor(Math.random() * STATUSES.length)];
-    const cryptoType = CRYPTO_TYPES[Math.floor(Math.random() * CRYPTO_TYPES.length)];
-    
-    mockInvoices.push({
-      id: `INV-${id.toString().padStart(5, '0')}`,
-      amount: Math.random() * 1000 + 50,
-      status: status,
-      cryptoType: cryptoType,
-      createdAt: new Date().toISOString(),
-      expiresAt: ''
-    });
-  }
-  return mockInvoices;
-};
-
-// ---------------------------------------------
-// COMPONENTE INVOICELISTSCREEN
-// ---------------------------------------------
-
 const InvoiceListScreen = () => {
-  const [invoices, setInvoices] = useState<InvoiceEntity[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [filters, setFilters] = useState<InvoiceFilter>({ statuses: [], cryptoTypes: [] });
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const mockFetchData = async (limit: number, skip: number, currentFilters: InvoiceFilter) => {
-    await new Promise(resolve => setTimeout(resolve, 500)); 
-    let mockData = createMockInvoices(limit, skip);
-    
-    if (currentFilters.statuses.length > 0) {
-      mockData = mockData.filter(inv => currentFilters.statuses.includes(inv.status));
-    }
-    if (currentFilters.cryptoTypes.length > 0) {
-      mockData = mockData.filter(inv => currentFilters.cryptoTypes.includes(inv.cryptoType));
-    }
-    if (searchQuery) {
-      mockData = mockData.filter(inv => inv.id.includes(searchQuery));
-    }
-    const mockHasMore = currentPage < 3; 
-    return { data: mockData, hasMore: mockHasMore };
-  };
+  const invoices = useInvoiceStore(state => state.invoices);
+  const loading = useInvoiceStore(state => state.loading);
+  const loadingMore = useInvoiceStore(state => state.loadingMore);
+  const error = useInvoiceStore(state => state.error);
+  const hasMore = useInvoiceStore(state => state.hasMore);
 
-  const fetchInvoices = async (reset = false) => {
-    if (!reset && (loading || loadingMore || !hasMore)) {
-      return;
-    }
-    const limit = 20;
-    const skip = reset ? 0 : currentPage * limit;
-    if (reset) {
-      setLoading(true);
-      setError(null);
-    } else {
-      setLoadingMore(true);
-    }
-    try {
-      const result = await mockFetchData(limit, skip, filters);
-      setInvoices(prevInvoices => reset ? result.data : [...prevInvoices, ...result.data]);
-      setCurrentPage(prevPage => prevPage + 1);
-      setHasMore(result.hasMore);
-      setError(null);
-    } catch (err: any) {
-      setError(err);
-      setHasMore(false);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  };
+  const fetchInvoices = useInvoiceStore(state => state.fetchInvoices);
 
-  const applyFilters = (newFilters: InvoiceFilter) => {
-    setFilters(newFilters);
-    setCurrentPage(0);
-    setInvoices([]); 
-    fetchInvoices(true);
-  };
+  const searchQuery = useInvoiceStore(state => state.searchQuery);
+  const setSearchQuery = useInvoiceStore(state => state.setSearchQuery);
 
+ 
   useEffect(() => {
+   
     if (invoices.length === 0 && !loading && !loadingMore && !error) {
       fetchInvoices(true);
     }
+    
+
     const pollingInterval = setInterval(() => {
       fetchInvoices(true); 
     }, POLLING_INTERVAL);
+    
+   
     return () => clearInterval(pollingInterval);
-  }, [fetchInvoices, invoices.length, loading, loadingMore, error]);
+    
+  }, [invoices.length, loading, loadingMore, error, fetchInvoices]); 
 
+ 
   const loadMore = () => {
+   
     if (!loading && !loadingMore && hasMore) {
       fetchInvoices(false);
     }
   };
+
+ 
   
-  // --- Renderización del Item de la Lista ---
+
+
   const renderItem = ({ item }: { item: InvoiceEntity }) => (
     <View style={styles.invoiceItem}>
       <View style={styles.itemRow}>
@@ -210,7 +130,7 @@ const InvoiceListScreen = () => {
               placeholderTextColor="#888"
               value={searchQuery}
               onChangeText={setSearchQuery}
-              onSubmitEditing={() => fetchInvoices(true)}
+              onSubmitEditing={() => fetchInvoices(true)} // Disparar fetch al enviar búsqueda
             />
           </View>
         </View>
@@ -261,10 +181,9 @@ const InvoiceListScreen = () => {
   );
 };
 
-
+// --- Estilos ---
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#262626', 
