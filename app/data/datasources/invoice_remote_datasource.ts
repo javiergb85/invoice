@@ -17,7 +17,7 @@ const MOCK_INVOICES_LIST: InvoiceEntity[] = [
   {
     id: 'INV-00002',
     amount: 220.00,
-    status: 'PENDING',
+    status: 'COMPLETED',
     cryptoType: 'ETH',
     createdAt: '2025-07-10T14:30:00Z',
     expiresAt: '2025-07-11T14:30:00Z',
@@ -25,7 +25,7 @@ const MOCK_INVOICES_LIST: InvoiceEntity[] = [
   {
     id: 'INV-00003',
     amount: 50.00,
-    status: 'CREATED',
+    status: 'COMPLETED',
     cryptoType: 'TRX',
     createdAt: '2025-07-11T09:15:00Z',
     expiresAt: '2025-07-12T09:15:00Z',

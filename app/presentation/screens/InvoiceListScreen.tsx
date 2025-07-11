@@ -16,7 +16,6 @@ const InvoiceListScreen = () => {
   const hasMore = useInvoiceStore(state => state.hasMore);
 
   const fetchInvoices = useInvoiceStore(state => state.fetchInvoices);
-
   const searchQuery = useInvoiceStore(state => state.searchQuery);
   const setSearchQuery = useInvoiceStore(state => state.setSearchQuery);
 
@@ -27,19 +26,17 @@ const InvoiceListScreen = () => {
       fetchInvoices(true);
     }
     
-
+    // Configuración del Polling
     const pollingInterval = setInterval(() => {
       fetchInvoices(true); 
     }, POLLING_INTERVAL);
     
-   
     return () => clearInterval(pollingInterval);
     
   }, [invoices.length, loading, loadingMore, error, fetchInvoices]); 
 
  
   const loadMore = () => {
-   
     if (!loading && !loadingMore && hasMore) {
       fetchInvoices(false);
     }
@@ -47,8 +44,7 @@ const InvoiceListScreen = () => {
 
  
   
-
-
+  // --- Renderización del Ítem de la Lista ---
   const renderItem = ({ item }: { item: InvoiceEntity }) => (
     <View style={styles.invoiceItem}>
       <View style={styles.itemRow}>
@@ -70,9 +66,34 @@ const InvoiceListScreen = () => {
         <Text style={styles.itemTitle}>Customer</Text>
         <Text style={styles.itemValue}>{'N/A'}</Text>
       </View>
+      
+      {/* Sección de Estado con Ícono Condicional */}
       <View style={styles.itemRow}>
         <Text style={styles.itemTitle}>Status</Text>
-        <Text style={styles.itemValue}>{item.status}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          
+          {/* Ícono verde para COMPLETED */}
+          {item.status === 'COMPLETED' && (
+            <Ionicons 
+              name="checkmark-circle-outline" 
+              size={16} 
+              color="green" 
+              style={{ marginRight: 5 }} 
+            />
+          )}
+
+          {/* Ícono rojo para EXPIRED */}
+          {item.status === 'EXPIRED' && (
+            <Ionicons 
+              name="time-outline" 
+              size={16} 
+              color="red" 
+              style={{ marginRight: 5 }} 
+            />
+          )}
+
+          <Text style={styles.itemValue}>{item.status}</Text>
+        </View>
       </View>
     </View>
   );
@@ -86,6 +107,7 @@ const InvoiceListScreen = () => {
     );
   };
 
+  // --- Renderización Condicional de Carga y Error ---
   if (loading && invoices.length === 0) {
     return (
       <View style={styles.centered}>
@@ -104,6 +126,7 @@ const InvoiceListScreen = () => {
     );
   }
 
+  // --- Renderización Principal del Componente ---
   return (
     <View style={styles.container}>
       
@@ -130,7 +153,7 @@ const InvoiceListScreen = () => {
               placeholderTextColor="#888"
               value={searchQuery}
               onChangeText={setSearchQuery}
-              onSubmitEditing={() => fetchInvoices(true)} // Disparar fetch al enviar búsqueda
+              onSubmitEditing={() => fetchInvoices(true)} 
             />
           </View>
         </View>
