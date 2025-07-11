@@ -2,65 +2,71 @@ import { Failure, ServerFailure } from '../../core/failures/failures';
 import { Either, left, right } from '../../core/utils/either';
 import { InvoiceEntity, InvoiceFilter } from '../../domain/entities/invoice_entity';
 
-// --- Datos Simulados Estáticos ---
-// Usamos una lista de facturas pre-creada para simular el origen de datos.
+ 
 const MOCK_INVOICES_LIST: InvoiceEntity[] = [
-  // Facturas de ejemplo para la simulación
+ 
   {
-    id: 'INV-00001',
+    id: '1',
     amount: 150.75,
     status: 'COMPLETED',
     cryptoType: 'USDT-TRX',
     createdAt: '2025-07-01T10:00:00Z',
     expiresAt: '2025-07-02T10:00:00Z',
+    customer: 'Javier Guevara',
   },
   {
-    id: 'INV-00002',
+    id: '2',
     amount: 220.00,
     status: 'COMPLETED',
     cryptoType: 'ETH',
     createdAt: '2025-07-10T14:30:00Z',
     expiresAt: '2025-07-11T14:30:00Z',
+    customer: 'Juan Lastra'
   },
   {
-    id: 'INV-00003',
+    id: '2818',
     amount: 50.00,
     status: 'COMPLETED',
     cryptoType: 'TRX',
     createdAt: '2025-07-11T09:15:00Z',
     expiresAt: '2025-07-12T09:15:00Z',
+    customer: 'Juan Lastra'
   },
   {
-    id: 'INV-00004',
+    id: '25',
     amount: 800.50,
     status: 'EXPIRED',
     cryptoType: 'USDT-ETH',
     createdAt: '2025-06-25T18:00:00Z',
     expiresAt: '2025-06-26T18:00:00Z',
+    customer: 'Juan Lastra'
   },
   {
-    id: 'INV-00005',
+    id: '3',
     amount: 300.00,
     status: 'COMPLETED',
     cryptoType: 'USDT-TRX',
     createdAt: '2025-07-09T11:45:00Z',
     expiresAt: '2025-07-10T11:45:00Z',
+    customer: 'Dat Tran'
   },
   {
-    id: 'INV-00006',
+    id: '4',
     amount: 300.00,
     status: 'COMPLETED',
     cryptoType: 'USDT-TRX',
     createdAt: '2025-07-09T11:45:00Z',
     expiresAt: '2025-07-10T11:45:00Z',
+    customer: 'Juan Lastra'
   },
   {
-    id: 'INV-00007',
+    id: '1120',
     amount: 300.00,
     status: 'COMPLETED',
     cryptoType: 'USDT-TRX',
     createdAt: '2025-07-09T11:45:00Z',
     expiresAt: '2025-07-10T11:45:00Z',
+    customer: 'Javier Guevara'
   },
 ];
 

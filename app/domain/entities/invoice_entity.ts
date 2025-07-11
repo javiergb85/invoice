@@ -8,6 +8,7 @@ export interface InvoiceEntity {
   cryptoType: CryptoType;
   createdAt: string;
   expiresAt: string;
+  customer: string;
 }
 
 export interface InvoiceFilter {
