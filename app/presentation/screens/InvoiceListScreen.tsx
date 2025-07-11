@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Button, FlatList, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { InvoiceEntity } from '../../domain/entities/invoice_entity';
 import { useInvoiceStore } from '../stores/invoice_store';
 
@@ -128,6 +128,7 @@ const InvoiceListScreen = () => {
 
   // --- Renderización Principal del Componente ---
   return (
+    <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       
       {/* Sección de Cabecera y Búsqueda */}
@@ -201,6 +202,7 @@ const InvoiceListScreen = () => {
         }
       />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#383838',
-    borderRadius: 8,
+    borderRadius: 4,
     height: 44,
     paddingHorizontal: 10,
     width: 180, 

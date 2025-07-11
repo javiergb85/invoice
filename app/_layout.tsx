@@ -22,8 +22,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Invoice List",
-            headerShown: true,
+            headerShown: false,
           }}
         />
         <Stack.Screen name="+not-found" />
